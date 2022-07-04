@@ -33,7 +33,7 @@ const GameScreen = () => {
         },
         {
             key: 2,
-            color: 'yellow',
+            color: 'orange',
         },
         {
             key: 3,

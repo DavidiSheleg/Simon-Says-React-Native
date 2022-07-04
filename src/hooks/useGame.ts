@@ -13,7 +13,14 @@ export default function useGame() {
 
     const clickSound = new Sound('clicksound.mp3', Sound.MAIN_BUNDLE, (error) => {
         if (error) {
-            console.log('failed to load the sound', error);
+            console.log('failed to load the click sound', error);
+            return;
+        }
+    });
+
+    const flashSound = new Sound('flashsound.mp3', Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+            console.log('failed to load the flash sound', error);
             return;
         }
     });
@@ -22,6 +29,7 @@ export default function useGame() {
         const currentColor = selectedSteps[flashCount - 1];
         setCurrentFlashColor(currentColor);
         setFlashCount(flashCount - 1);
+        flashSound.play();
 
         const delay = setTimeout(() => {
             setCurrentFlashColor(null);
