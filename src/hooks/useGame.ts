@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Sound from "react-native-sound";
 
 export default function useGame() {
 
@@ -9,6 +10,13 @@ export default function useGame() {
     const [isLost, setIsLost] = useState<boolean>(false);
 
     const score: number = selectedSteps.length;
+
+    const clickSound = new Sound('clicksound.mp3', Sound.MAIN_BUNDLE, (error) => {
+        if (error) {
+            console.log('failed to load the sound', error);
+            return;
+        }
+    });
 
     const flashColorAction = () => {
         const currentColor = selectedSteps[flashCount - 1];
@@ -50,7 +58,8 @@ export default function useGame() {
     }
 
     const AddStepToUserSteps = (key: number) => {
-        setCurrentUserSteps([...currentUserSteps, key]);
+        setCurrentUserSteps([key, ...currentUserSteps]);
+        clickSound.play();
     }
 
     // Flash the colors
@@ -74,7 +83,7 @@ export default function useGame() {
 
         if (selectedStepsLen === currentUserStepsLen) {
             for (let i = 0; i < selectedStepsLen; i++) {
-                if(selectedSteps[i] !== currentUserSteps[i]) {
+                if (selectedSteps[i] !== currentUserSteps[i]) {
                     setIsLost(true);
                     return;
                 }
@@ -88,6 +97,7 @@ export default function useGame() {
         score,
         currentFlashColor,
         isLost,
+        flashCount,
         startGame,
         resetGame,
         AddStepToUserSteps
