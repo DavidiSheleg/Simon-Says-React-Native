@@ -6,12 +6,13 @@ type Props = {
     resetGame: Function,
     navigateToResults: Function,
     isLost: boolean,
+    inputValue: string,
+    setInputValue: Function
 }
 
 const LostModal = (props: Props) => {
 
-    const { resetGame, navigateToResults, isLost } = props;
-    const [inputValue, setInputValue] = useState<string>('');
+    const { resetGame, navigateToResults, isLost, inputValue, setInputValue } = props;
 
     return (
         <Modal

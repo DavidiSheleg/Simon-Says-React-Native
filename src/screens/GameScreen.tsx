@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import ColorButton from '../components/ColorButton';
 import LostModal from '../components/LostModal';
@@ -11,11 +11,17 @@ const GameScreen = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const { score, currentFlashColor, isLost, flashCount, startGame, resetGame, AddStepToUserSteps } = useGame();
+    const [inputValue, setInputValue] = useState<string>('');
 
     useFocusEffect(
         useCallback(() => {
             resetGame();
         }, []));
+
+
+    useEffect(() => {
+        setInputValue('');
+    }, [isLost]);
 
     const navigateToResults = (userName: string) => {
         dispatch(addResult({ name: userName, score }));
@@ -51,7 +57,7 @@ const GameScreen = () => {
                             onButtonClick={() => AddStepToUserSteps(key)}
                             color={color}
                             isFlashing={currentFlashColor === key ? true : false}
-                            disabled={flashCount > 0}
+                            disabled={flashCount > 0 || score == 0}
                         />
                     ))
                 }
@@ -69,6 +75,8 @@ const GameScreen = () => {
                 resetGame={resetGame}
                 navigateToResults={navigateToResults}
                 isLost={isLost}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
             />
         </View>
     )
