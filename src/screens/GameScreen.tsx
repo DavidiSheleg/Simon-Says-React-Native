@@ -1,13 +1,13 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import ColorButton from '../components/ColorButton';
 import LostModal from '../components/LostModal';
 import useGame from '../hooks/useGame';
 
 const GameScreen = () => {
     const navigation = useNavigation();
-    const { score, currentFlashColor, isLost, startGame, resetGame, AddStepToUserSteps } = useGame();
+    const { score, currentFlashColor, isLost, flashCount, startGame, resetGame, AddStepToUserSteps } = useGame();
 
     useFocusEffect(
         useCallback(() => {
@@ -16,6 +16,25 @@ const GameScreen = () => {
 
     const navigateToResults = () => navigation.navigate('ResultsScreen');
 
+    const controls = [
+        {
+            key: 0,
+            color: 'green',
+        },
+        {
+            key: 1,
+            color: 'red',
+        },
+        {
+            key: 2,
+            color: 'yellow',
+        },
+        {
+            key: 3,
+            color: 'blue',
+        },
+    ];
+
     return (
         <View style={styles.root}>
             <View style={styles.btn}>
@@ -23,14 +42,20 @@ const GameScreen = () => {
             </View>
 
             <View style={styles.container}>
-                <ColorButton onButtonClick={() => AddStepToUserSteps(0)} color={'green'} buttonKey={0} isActive={currentFlashColor === 0 ? true : false} />
-                <ColorButton onButtonClick={() => AddStepToUserSteps(1)} color={'red'} buttonKey={1} isActive={currentFlashColor === 1 ? true : false} />
-                <ColorButton onButtonClick={() => AddStepToUserSteps(2)} color={'yellow'} buttonKey={2} isActive={currentFlashColor === 2 ? true : false} />
-                <ColorButton onButtonClick={() => AddStepToUserSteps(3)} color={'blue'} buttonKey={3} isActive={currentFlashColor === 3 ? true : false} />
+                {
+                    controls.map(({ key, color }) => (
+                        <ColorButton
+                            key={key}
+                            onButtonClick={() => AddStepToUserSteps(key)}
+                            color={color}
+                            isFlashing={currentFlashColor === key ? true : false}
+                            disabled={flashCount > 0}
+                        />
+                    ))
+                }
             </View>
-
             <View>
-                <Text>Score: {score} {isLost.toString()}</Text>
+                <Text>Score: {score}</Text>
             </View>
 
             <LostModal
