@@ -14,7 +14,9 @@ const GameScreen = () => {
             resetGame();
         }, []));
 
-    const navigateToResults = () => navigation.navigate('ResultsScreen');
+    const navigateToResults = (userName: string) => {
+        navigation.navigate('ResultsScreen');
+    }
 
     const controls = [
         {

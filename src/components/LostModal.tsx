@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
 const LostModal = (props: Props) => {
 
     const { resetGame, navigateToResults, isLost } = props;
+    const [inputValue, setInputValue] = useState<string>('');
 
     return (
         <Modal
@@ -24,12 +25,20 @@ const LostModal = (props: Props) => {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text>You Lost!</Text>
-                    <Pressable style={[styles.button, styles.buttonClose]} onPress={() => resetGame()}>
-                        <Text>New Game</Text>
-                    </Pressable>
-                    <Pressable style={[styles.button, styles.buttonClose]} onPress={() => navigateToResults()}>
-                        <Text>Results Screen</Text>
-                    </Pressable>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setInputValue}
+                        value={inputValue}
+                        placeholder="Enter your name"
+                    />
+                    <View style={styles.buttonsRow}>
+                        <Pressable style={[styles.button, styles.successButton]} onPress={() => resetGame()}>
+                            <Text>New Game</Text>
+                        </Pressable>
+                        <Pressable style={[styles.button, styles.infoButton]} onPress={() => navigateToResults(inputValue)}>
+                            <Text>Send Results</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -44,7 +53,7 @@ const styles = StyleSheet.create({
         marginTop: 22
     },
     modalView: {
-        margin: 20,
+        margin: 10,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
@@ -58,15 +67,26 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
+    input: {
+        height: 40,
+        margin: 14,
+        borderWidth: 1,
+        padding: 12,
+    },
+    buttonsRow: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
     button: {
         borderRadius: 20,
         padding: 10,
         elevation: 2
     },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
+    successButton: {
+        backgroundColor: "#52D756",
+        marginRight: 20,
     },
-    buttonClose: {
+    infoButton: {
         backgroundColor: "#2196F3",
     },
 });
