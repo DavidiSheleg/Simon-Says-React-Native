@@ -43,10 +43,6 @@ const GameScreen = () => {
 
     return (
         <View style={styles.root}>
-            <View style={styles.btn}>
-                <Button onPress={() => startGame()} title={'Start'} />
-            </View>
-
             <View style={styles.container}>
                 {
                     controls.map(({ key, color }) => (
@@ -60,6 +56,11 @@ const GameScreen = () => {
                     ))
                 }
             </View>
+
+            <View style={styles.btn}>
+                <Button onPress={() => startGame()} title={'Start'} />
+            </View>
+
             <View>
                 <Text>Score: {score}</Text>
             </View>
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
     btn: {
         width: 200,
         maxWidth: '80%',
+        marginBottom: 20
     },
     container: {
         display: 'flex',

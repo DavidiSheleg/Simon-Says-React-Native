@@ -8,11 +8,7 @@
  * @format
  */
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 
 import { persistor, store } from './src/redux/store';
 import { Provider } from 'react-redux';
