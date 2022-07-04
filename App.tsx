@@ -11,18 +11,16 @@ import React from 'react';
 import {
   SafeAreaView,
   StatusBar,
-  StyleSheet,
-  Text,
   useColorScheme,
-  View,
 } from 'react-native';
+
+import { persistor, store } from './src/redux/store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
 import GameScreen from './src/screens/GameScreen';
 import ResultsScreen from './src/screens/ResultsScreen';
 
@@ -30,29 +28,24 @@ import ResultsScreen from './src/screens/ResultsScreen';
 
 const App = () => {
 
-
-  const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   const Stack = createStackNavigator();
 
   return (
-    <SafeAreaView style={{ display: 'flex', flex: 1 }}>
-      <StatusBar barStyle="dark-content" />
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="GameScreen" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="GameScreen" component={GameScreen} />
-          <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <SafeAreaView style={{ display: 'flex', flex: 1 }}>
+          <StatusBar barStyle="light-content" />
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="GameScreen" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="GameScreen" component={GameScreen} />
+              <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
 };
 
-const styles = StyleSheet.create({
-
-});
 
 export default App;

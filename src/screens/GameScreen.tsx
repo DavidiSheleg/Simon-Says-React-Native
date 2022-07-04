@@ -4,9 +4,12 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import ColorButton from '../components/ColorButton';
 import LostModal from '../components/LostModal';
 import useGame from '../hooks/useGame';
+import { useDispatch } from 'react-redux';
+import { addResult } from '../redux/resultsSlice';
 
 const GameScreen = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const { score, currentFlashColor, isLost, flashCount, startGame, resetGame, AddStepToUserSteps } = useGame();
 
     useFocusEffect(
@@ -15,6 +18,7 @@ const GameScreen = () => {
         }, []));
 
     const navigateToResults = (userName: string) => {
+        dispatch(addResult({ name: userName, score }));
         navigation.navigate('ResultsScreen');
     }
 
