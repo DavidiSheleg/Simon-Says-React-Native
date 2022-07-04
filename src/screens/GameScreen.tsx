@@ -12,7 +12,7 @@ const GameScreen = () => {
     const dispatch = useDispatch();
     const { score, currentFlashColor, isLost, flashCount, startGame, resetGame, AddStepToUserSteps } = useGame();
     const [inputValue, setInputValue] = useState<string>('');
-
+    const [inputError, setInputError] = useState<string>('');
     useFocusEffect(
         useCallback(() => {
             resetGame();
@@ -21,10 +21,16 @@ const GameScreen = () => {
 
     useEffect(() => {
         setInputValue('');
+        setInputError('');
     }, [isLost]);
 
-    const navigateToResults = (userName: string) => {
-        dispatch(addResult({ name: userName, score }));
+    const navigateToResults = () => {
+        if(inputValue.trim().length === 0) {
+            setInputError('Please enter vaild name');
+            return;
+        }
+
+        dispatch(addResult({ name: inputValue, score }));
         navigation.navigate('ResultsScreen');
     }
 
@@ -77,6 +83,7 @@ const GameScreen = () => {
                 isLost={isLost}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
+                inputError={inputError}
             />
         </View>
     )

@@ -7,12 +7,13 @@ type Props = {
     navigateToResults: Function,
     isLost: boolean,
     inputValue: string,
-    setInputValue: Function
+    setInputValue: Function,
+    inputError: string
 }
 
 const LostModal = (props: Props) => {
 
-    const { resetGame, navigateToResults, isLost, inputValue, setInputValue } = props;
+    const { resetGame, navigateToResults, isLost, inputValue, setInputValue, inputError } = props;
 
     return (
         <Modal
@@ -36,10 +37,14 @@ const LostModal = (props: Props) => {
                         <Pressable style={[styles.button, styles.successButton]} onPress={() => resetGame()}>
                             <Text>New Game</Text>
                         </Pressable>
-                        <Pressable style={[styles.button, styles.infoButton]} onPress={() => navigateToResults(inputValue)}>
+                        <Pressable style={[styles.button, styles.infoButton]} onPress={() => navigateToResults()}>
                             <Text>Send Results</Text>
                         </Pressable>
                     </View>
+                    {
+                        inputError && 
+                        <Text style={{ color: 'red' }}>{ inputError }</Text>
+                    }
                 </View>
             </View>
         </Modal>

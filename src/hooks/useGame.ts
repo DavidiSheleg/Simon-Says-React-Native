@@ -33,7 +33,7 @@ export default function useGame() {
 
         const delay = setTimeout(() => {
             setCurrentFlashColor(null);
-        }, 2000);
+        }, 1000);
 
     }
 
@@ -75,7 +75,7 @@ export default function useGame() {
         if (flashCount == 0) {
             return;
         }
-        const id = setInterval(flashColorAction, 3000);
+        const id = setInterval(flashColorAction, 1500);
         return () => {
             clearInterval(id);
         }
