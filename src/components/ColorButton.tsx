@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type Props = {
     color: string,
     onButtonClick: Function,
-    buttonKey: number,
-    isActive: boolean
+    isFlashing: boolean,
+    disabled: boolean
 }
 
 const ColorButton = (props: Props) => {
 
-    const { color, onButtonClick, buttonKey, isActive } = props;
+    const { color, onButtonClick, isFlashing, disabled } = props;
 
     return (
-        <TouchableOpacity style={styles(color, isActive).root} onPress={() => onButtonClick()}>
+        <TouchableOpacity disabled={disabled} style={styles(color, isFlashing).root} onPress={() => onButtonClick()}>
             
         </TouchableOpacity>
     )
