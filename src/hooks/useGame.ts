@@ -22,7 +22,7 @@ export default function useGame() {
         if (error) {
             console.log('failed to load the flash sound', error);
             return;
-        }
+        } 
     });
 
     const flashColorAction = () => {
@@ -30,7 +30,7 @@ export default function useGame() {
         setCurrentFlashColor(currentColor);
         setFlashCount(flashCount - 1);
         flashSound.play();
-
+ 
         const delay = setTimeout(() => {
             setCurrentFlashColor(null);
         }, 1000);
@@ -60,7 +60,7 @@ export default function useGame() {
 
     const AddStep = () => {
         const randomStep = getRandomStep();
-        setSelectedSteps([...selectedSteps, randomStep]);
+        setSelectedSteps([randomStep, ...selectedSteps]);
         setCurrentUserSteps([]);
         setFlashCount(selectedSteps.length + 1);
     }
